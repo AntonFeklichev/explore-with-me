@@ -1,7 +1,7 @@
-package endpointHit.repository;
+package ewmstats.endpointhit.repository;
 
-import endpointHit.entity.EndPointHit;
-import endpointHit.repository.projections.StatsProjection;
+import ewmstats.endpointhit.entity.EndPointHit;
+import ewmstats.endpointhit.repository.projections.StatsProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ public interface StatsRepository extends JpaRepository<EndPointHit, Long> {
 
     @Query("""
             SELECT
-            COUNT hit AS hits,
+            COUNT (hit) AS hits,
             hit.app AS app,
             hit.uri AS uri
             FROM EndPointHit AS hit
@@ -45,7 +45,7 @@ public interface StatsRepository extends JpaRepository<EndPointHit, Long> {
 
     @Query("""
             SELECT
-            COUNT hit AS hits,
+            COUNT (hit) AS hits,
             hit.app AS app,
             hit.uri AS uri
             FROM EndPointHit AS hit

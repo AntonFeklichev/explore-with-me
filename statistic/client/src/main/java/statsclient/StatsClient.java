@@ -1,4 +1,4 @@
-package statsClient;
+package statsclient;
 
 import base.BaseClient;
 import org.springframework.beans.factory.annotation.Value;

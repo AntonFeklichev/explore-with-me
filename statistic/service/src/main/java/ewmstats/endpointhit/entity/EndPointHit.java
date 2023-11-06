@@ -1,4 +1,4 @@
-package endpointHit.entity;
+package ewmstats.endpointhit.entity;
 
 import lombok.*;
 

@@ -1,10 +1,10 @@
-package endpointHit.service;
+package ewmstats.endpointhit.service;
 
-import endPointHit.dto.EndPointHitDto;
-import endpointHit.entity.EndPointHit;
-import endpointHit.mapper.EndPointHitMapper;
-import endpointHit.repository.StatsRepository;
-import endpointHit.repository.projections.StatsProjection;
+import endpointhit.EndPointHitDto;
+import ewmstats.endpointhit.entity.EndPointHit;
+import ewmstats.endpointhit.mapper.EndPointHitMapper;
+import ewmstats.endpointhit.repository.StatsRepository;
+import ewmstats.endpointhit.repository.projections.StatsProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import stats.dto.StatsDto;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StatsService {
 
-    EndPointHitMapper endPointHitMapper;
+    private final EndPointHitMapper endPointHitMapper;
 
     private final StatsRepository statsRepository;
 

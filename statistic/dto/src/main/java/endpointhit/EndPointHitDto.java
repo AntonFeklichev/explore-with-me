@@ -1,10 +1,13 @@
-package endPointHit.dto;
+package endpointhit;
 
 import lombok.Builder;
+import lombok.Data;
+
 
 import java.time.LocalDateTime;
 
 @Builder
+@Data
 public class EndPointHitDto {
 
     private String app;

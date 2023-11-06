@@ -1,7 +1,7 @@
-package endPointHitClient;
+package endpointhitclient;
 
 import base.BaseClient;
-import endPointHit.dto.EndPointHitDto;
+import endpointhit.EndPointHitDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.util.DefaultUriBuilderFactory;

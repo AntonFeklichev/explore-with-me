@@ -1,7 +1,7 @@
-package endpointHit.controller;
+package ewmstats.endpointhit.controller;
 
-import endPointHit.dto.EndPointHitDto;
-import endpointHit.service.StatsService;
+import endpointhit.EndPointHitDto;
+import ewmstats.endpointhit.service.StatsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;

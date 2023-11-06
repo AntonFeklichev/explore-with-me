@@ -1,4 +1,4 @@
-package endpointHit.repository.projections;
+package ewmstats.endpointhit.repository.projections;
 
 public interface StatsProjection {
 

@@ -1,7 +1,7 @@
-package endpointHit.mapper;
+package ewmstats.endpointhit.mapper;
 
-import endPointHit.dto.EndPointHitDto;
-import endpointHit.entity.EndPointHit;
+import endpointhit.EndPointHitDto;
+import ewmstats.endpointhit.entity.EndPointHit;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
