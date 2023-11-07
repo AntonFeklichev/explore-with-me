@@ -33,9 +33,11 @@ public class StatsController {
                                    LocalDateTime start,
                                    @RequestParam(name = "end")
                                    LocalDateTime end,
-                                   @RequestParam(name = "uris")
+                                   @RequestParam(name = "uris",
+                                           defaultValue = "")
                                    List<String> uris,
-                                   @RequestParam(name = "unique")
+                                   @RequestParam(name = "unique",
+                                           defaultValue = "false")
                                    Boolean unique) {
 
 

@@ -1,13 +1,14 @@
 server:
+  port: 9090
+
+spring:
+
   mvc:
     format:
       date: "yyyy-MM-dd"
       time: "HH:mm:ss"
       date-time: "yyyy-MM-dd HH:mm:ss"
 
-  port: 9090
-
-spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
