@@ -6,6 +6,6 @@ public interface StatsProjection {
 
     String getUri();
 
-    Long getHit();
+    Long getHits();
 
 }

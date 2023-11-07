@@ -92,7 +92,7 @@ public class StatsService {
                 .map(statsProj -> StatsDto.builder()
                         .app(statsProj.getApp())
                         .uri(statsProj.getUri())
-                        .hits(statsProj.getHit())
+                        .hits(statsProj.getHits())
                         .build())
                 .collect(Collectors.toList());
     }

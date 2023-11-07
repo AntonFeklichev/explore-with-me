@@ -1,5 +1,6 @@
 package ewmstats.endpointhit.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import endpointhit.EndPointHitDto;
 import ewmstats.endpointhit.service.StatsService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,10 @@ public class StatsController {
 
     private final StatsService statsService;
 
+
+    private static final String DATETIME_FORMAT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
+
     @PostMapping("/hit")
     public void saveEndPointHit(@RequestBody
                                 EndPointHitDto endPointHitDto) {
@@ -30,8 +35,10 @@ public class StatsController {
 
     @GetMapping("/stats")
     public List<StatsDto> getStats(@RequestParam(name = "start")
+                                   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATETIME_FORMAT_PATTERN)
                                    LocalDateTime start,
                                    @RequestParam(name = "end")
+                                   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATETIME_FORMAT_PATTERN)
                                    LocalDateTime end,
                                    @RequestParam(name = "uris",
                                            defaultValue = "")
