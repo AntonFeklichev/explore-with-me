@@ -1,0 +1,2 @@
+stats:
+  server: URL=${STATS_SERVER_URL}
