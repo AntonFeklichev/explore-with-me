@@ -34,7 +34,7 @@ public class UserService {
 
         Pageable pageRequest = PageRequest.of(from, size);
 
-        if (ids == null) {  //TODO Спросить у Матвея null или isEmpty
+        if (ids == null) {
             return userRepository.findAll(pageRequest).map(userDtoMapper::toUserDto);
         }
         return userRepository.findAllByIdIn(ids, pageRequest).map(userDtoMapper::toUserDto);

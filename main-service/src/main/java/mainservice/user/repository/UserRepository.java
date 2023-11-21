@@ -15,6 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
            "WHERE u.user_id IN ?1" +
            "ORDER BY u.user_id DESC"
     )
-    Page<User> findAllByIdIn(List<Long> ids, Pageable pageRequest);//TODO Уточнить по нахванию метода
+    Page<User> findAllByIdIn(List<Long> ids, Pageable pageRequest);
 
 }

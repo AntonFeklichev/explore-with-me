@@ -2,13 +2,16 @@ package mainservice.event.controller;
 
 import lombok.RequiredArgsConstructor;
 import mainservice.event.dto.EventFullDto;
+import mainservice.event.dto.EventShortDto;
 import mainservice.event.dto.NewEventDto;
+import mainservice.event.dto.UpdateEventUserRequest;
 import mainservice.event.service.PrivateEventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Validated
 @RestController
@@ -28,6 +31,45 @@ public class PrivateEventController {
 
         return privateEventService.addEvent(userId, newEventDto);
 
+    }
+
+    @GetMapping(path = "/{userId}/events")
+    @ResponseStatus(HttpStatus.OK)
+
+    public List<EventShortDto> getEventsByUserId(@PathVariable(name = "userId", required = true)
+                                                 Long userId,
+                                                 @RequestParam(name = "from", defaultValue = "0")
+                                                 Integer from,
+                                                 @RequestParam(name = "size", defaultValue = "10")
+                                                 Integer size) {
+
+        return privateEventService.getEventsByUserId(userId, from, size);
+
+    }
+
+    @GetMapping(path = "/{userId}/events/{eventId}")
+    @ResponseStatus(HttpStatus.OK)
+
+    public EventFullDto getEventByUserIdAndEventId(@PathVariable(name = "userId")
+                                                   Long userId,
+                                                   @PathVariable(name = "eventId")
+                                                   Long eventId) {
+
+        return privateEventService.getEventByUserIdAndEventId(userId, eventId);
+    }
+
+    @PatchMapping(path = "/{userId}/events/{eventId}")
+    @ResponseStatus(HttpStatus.OK)
+    public EventFullDto patchEventByUserInitiatorIdAndEventId(@PathVariable(name = "userId")
+                                                              Long userId,
+                                                              @PathVariable(name = "userId")
+                                                              Long eventId,
+                                                              @RequestBody
+                                                              UpdateEventUserRequest updateEventUserRequest) {
+
+        return privateEventService.patchEventByUserInitiatorIdAndEventId(userId,
+                eventId,
+                updateEventUserRequest);
     }
 
 }
