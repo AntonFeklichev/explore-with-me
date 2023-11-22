@@ -2,8 +2,7 @@ package mainservice.event.dto;
 
 import lombok.Builder;
 import lombok.Value;
-import mainservice.category.entity.Category;
-import mainservice.event.entity.EventStateEnum;
+
 import mainservice.location.entity.Location;
 
 @Value
@@ -11,7 +10,7 @@ import mainservice.location.entity.Location;
 public class UpdateEventUserRequest {
 
     String annotation;
-    Category category;
+    Long category;
     String description;
     String eventDate;
     Location location;

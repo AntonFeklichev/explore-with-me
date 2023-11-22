@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT u" +
-           "FROM users AS u" +
-           "WHERE u.user_id IN ?1" +
-           "ORDER BY u.user_id DESC"
+    @Query("SELECT u " +
+           "FROM User AS u " +
+           "WHERE u.id IN ?1 " +
+           "ORDER BY u.id DESC"
     )
     Page<User> findAllByIdIn(List<Long> ids, Pageable pageRequest);
 

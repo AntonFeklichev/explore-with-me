@@ -62,7 +62,7 @@ public class PrivateEventService {
     }
 
     private Location createIfNotExist(Location location) {
-        return locationRepository.findByLatAndLog(location.getLat(), location.getLon())
+        return locationRepository.findByLatAndLon(location.getLat(), location.getLon())
                 .orElse(locationRepository.saveAndFlush(location));
     }
 

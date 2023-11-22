@@ -22,7 +22,8 @@ public class Event {
     private Long id;
     @Column(name = "events_annotation")
     private String annotation;
-    @Column(name = "events_category")
+    @JoinColumn(name = "events_category")
+    @ManyToOne
     private Category category;
     @Column(name = "events_confirmed_requests")
     private Integer confirmedRequests;
@@ -32,9 +33,11 @@ public class Event {
     private String description;
     @Column(name = "events_event_date")
     private String eventDate;
-    @Column(name = "events_initiator")
+    @JoinColumn(name = "events_initiator")
+    @ManyToOne
     private User initiator;
-    @Column(name = "events_location")
+    @JoinColumn(name = "events_location")
+    @ManyToOne
     private Location location;
     @Column(name = "events_paid")
     private Boolean paid;
@@ -45,6 +48,7 @@ public class Event {
     @Column(name = "events_request_moderation")
     private Boolean requestModeration;
     @Column(name = "events_state")
+    @Enumerated(value = EnumType.STRING)
     private EventStateEnum state;
     @Column(name = "events_title")
     private String title;

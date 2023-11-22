@@ -11,8 +11,8 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     @Query("SELECT l " +
            "FROM Location AS l " +
            "WHERE l.lat = :lat " +
-           "AND l.log = :log"
+           "AND l.lon = :lon"
     )
-    Optional<Location> findByLatAndLog(Double lat, Double log);
+    Optional<Location> findByLatAndLon(Double lat, Double lon);
 
 }
