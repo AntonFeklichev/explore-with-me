@@ -6,6 +6,9 @@ import mainservice.event.dto.EventShortDto;
 import mainservice.event.dto.NewEventDto;
 import mainservice.event.dto.UpdateEventUserRequest;
 import mainservice.event.service.PrivateEventService;
+import mainservice.participationrequest.dto.EventRequestStatusUpdateRequest;
+import mainservice.participationrequest.dto.EventRequestStatusUpdateResult;
+import mainservice.participationrequest.dto.ParticipationRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -71,5 +74,32 @@ public class PrivateEventController {
                 eventId,
                 updateEventUserRequest);
     }
+
+    @GetMapping(path = "/{userId}/events/{eventId}/requests")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ParticipationRequestDto> getParticipationRequestListByUserIdByEventId(
+            @PathVariable(name = "userId")
+            Long userId,
+            @PathVariable(name = "eventId")
+            Long eventId) {
+
+        return privateEventService.getParticipationRequestListByUserIdByEventId(userId, eventId);
+    }
+
+    @PatchMapping(path = "/{userId}/events/{eventId}/requests")
+    @ResponseStatus(HttpStatus.OK)
+    public EventRequestStatusUpdateResult patchParticipationRequestStatus(@PathVariable(name = "userId")
+                                                                          Long userId,
+                                                                          @PathVariable(name = "eventId")
+                                                                          Long eventId,
+                                                                          @RequestBody
+                                                                          EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
+
+        return privateEventService.patchParticipationRequestStatus(
+                userId,
+                eventId,
+                eventRequestStatusUpdateRequest);
+    }
+
 
 }

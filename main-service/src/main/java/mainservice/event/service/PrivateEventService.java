@@ -14,14 +14,23 @@ import mainservice.event.repository.EventRepository;
 import mainservice.exception.*;
 import mainservice.location.entity.Location;
 import mainservice.location.repository.LocationRepository;
+import mainservice.participationrequest.dto.EventRequestStatusUpdateRequest;
+import mainservice.participationrequest.dto.EventRequestStatusUpdateResult;
+import mainservice.participationrequest.dto.ParticipationRequestDto;
+import mainservice.participationrequest.dto.ParticipationRequestEnum;
+import mainservice.participationrequest.entity.ParticipationRequest;
+import mainservice.participationrequest.mapper.ParticipationRequestToDtoMapper;
+import mainservice.participationrequest.repository.ParticipationRequestRepository;
 import mainservice.user.entity.User;
 import mainservice.user.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.time.LocalTime.now;
 
@@ -37,6 +46,9 @@ public class PrivateEventService {
     private final EventToEventFullDtoMapper eventToEventFullDtoMapper;
     private final EventToEventShortDto eventToEventShortDto;
     private final EventPatchByUpdateEventUserRequestMapper eventPatchByUpdateEventUserRequestMapper;
+    private final ParticipationRequestRepository participationRequestRepository;
+
+    private final ParticipationRequestToDtoMapper participationRequestToDtoMapper;
 
     public EventFullDto addEvent(Long userId, NewEventDto newEventDto) {
 
@@ -130,5 +142,92 @@ public class PrivateEventService {
         }
     }
 
+    public List<ParticipationRequestDto> getParticipationRequestListByUserIdByEventId
+            (Long userId, Long eventId) {
+
+        Long initiatorId = eventRepository.findInitiatorIdByEventId(eventId);
+
+        checkUserIdAndInitiatorId(userId, initiatorId);
+
+        return participationRequestRepository.findAllByEventId(eventId)
+                .stream()
+                .map(participationRequestToDtoMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public EventRequestStatusUpdateResult patchParticipationRequestStatus(
+            Long userId,
+            Long eventId,
+            EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
+
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventNotFoundException("Event not found"));
+
+        checkUserIdAndInitiatorId(userId, event.getInitiator().getId());
+
+        List<ParticipationRequest> participationRequestList = participationRequestRepository
+                .findAllById(eventRequestStatusUpdateRequest.getRequestIds());
+
+        ParticipationRequestEnum newStatus = eventRequestStatusUpdateRequest.getStatus();
+
+        List<ParticipationRequestDto> confirmedRequests = new ArrayList<>();
+        List<ParticipationRequestDto> rejectedRequests = new ArrayList<>();
+
+        participationRequestList.forEach(
+                request -> {
+                    if (!ParticipationRequestEnum.PENDING.equals(request.getStatus())) {
+                        throw new ParticipationRequestEnumException("Request status must be equal PENDING");
+                    }
+                    if (Objects.equals(event.getParticipantLimit(), event.getConfirmedRequests())) {
+                        rejectAllPendingRequestByEventId(eventId);
+                        throw new ParticipantLimitReachedException("Participant limit was reached.");
+                    }
+                    switch (newStatus) {
+
+                        case CONFIRMED: {
+                            confirmRequest(event, newStatus, confirmedRequests, request);
+                            return;
+                        }
+                        case REJECTED: {
+                            rejectRequest(newStatus, rejectedRequests, request);
+                            return;
+                        }
+                        default: {
+                            throw new InvalidStatusException("Unknown event status!");
+                        }
+                    }
+                }
+        );
+        participationRequestRepository.saveAll(participationRequestList);
+
+        eventRepository.save(event);
+
+        return EventRequestStatusUpdateResult.builder()
+                .confirmedRequests(confirmedRequests)
+                .rejectedRequests(rejectedRequests)
+                .build();
+    }
+
+    private void rejectAllPendingRequestByEventId(Long eventId) {
+        participationRequestRepository
+                .updateStatusByEventIdAndPending(eventId, ParticipationRequestEnum.REJECTED);
+    }
+
+
+    private void confirmRequest(Event event,
+                                ParticipationRequestEnum newStatus,
+                                List<ParticipationRequestDto> confirmedRequests,
+                                ParticipationRequest request) {
+        request.setStatus(newStatus);
+        event.setConfirmedRequests(event.getConfirmedRequests() + 1);
+        confirmedRequests.add(participationRequestToDtoMapper.toDto(request));
+    }
+
+    private void rejectRequest(ParticipationRequestEnum newStatus,
+                               List<ParticipationRequestDto> rejectedRequests,
+                               ParticipationRequest request) {
+        request.setStatus(newStatus);
+        rejectedRequests.add(participationRequestToDtoMapper.toDto(request));
+    }
 
 }

@@ -21,4 +21,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
            "AND e.id = :eventId")
     Event getEventByUserIdAndEventId(Long userId, Long eventId); */
 
+@Query("SELECT e.initiator.id " +
+       "FROM Event as e " +
+       "WHERE e.id = :eventId")
+   Long findInitiatorIdByEventId(Long eventId);
+
 }
