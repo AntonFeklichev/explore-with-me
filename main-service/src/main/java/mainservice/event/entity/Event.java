@@ -6,6 +6,7 @@ import mainservice.location.entity.Location;
 import mainservice.user.entity.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events")
@@ -28,11 +29,11 @@ public class Event {
     @Column(name = "events_confirmed_requests")
     private Integer confirmedRequests;
     @Column(name = "events_created_on")
-    private String createdOn;
+    private LocalDateTime createdOn;
     @Column(name = "events_description")
     private String description;
     @Column(name = "events_event_date")
-    private String eventDate;
+    private LocalDateTime eventDate;
     @JoinColumn(name = "events_initiator")
     @ManyToOne
     private User initiator;
@@ -44,7 +45,7 @@ public class Event {
     @Column(name = "events_participant_limit")
     private Integer participantLimit;
     @Column(name = "events_published_on")
-    private String publishedOn;
+    private LocalDateTime publishedOn;
     @Column(name = "events_request_moderation")
     private Boolean requestModeration;
     @Column(name = "events_state")
