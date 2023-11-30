@@ -3,13 +3,11 @@ package mainservice.event.controller;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.RequiredArgsConstructor;
 import mainservice.event.dto.EventFullDto;
+import mainservice.event.dto.UpdateEventAdminRequest;
 import mainservice.event.dto.filter.AdminEventFilterQuery;
 import mainservice.event.service.AdminEventService;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +22,7 @@ public class AdminEventController {
     private final AdminEventService adminEventService;
 
 
-    @GetMapping(path = "events")
+    @GetMapping(path = "/events")
     public List<EventFullDto> getEventsList(@RequestParam(name = "usersIds", defaultValue = "")
                                             List<Long> usersIds,
                                             @RequestParam(name = "states", defaultValue = "")
@@ -55,6 +53,15 @@ public class AdminEventController {
                 .build();
 
         return adminEventService.getEventsList(filterQuery);
+    }
+
+    @PatchMapping(path = "/events/{eventId}")
+    public EventFullDto patchEvent(@PathVariable(name = "eventId")
+                                   Long eventId,
+                                   @RequestBody
+                                   UpdateEventAdminRequest updateEventAdminRequest) {
+
+        return adminEventService.patchEvent(eventId, updateEventAdminRequest);
     }
 
 }

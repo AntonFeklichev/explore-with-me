@@ -28,7 +28,7 @@ public class CustomEventRepositoryImpl extends SimpleJpaRepository<Event, Long> 
     }
 
     @Override
-   public List<Event> getEventsListForAdmin(AdminEventFilterQuery filterQuery) {
+    public List<Event> getEventsListForAdmin(AdminEventFilterQuery filterQuery) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> criteriaQuery = criteriaBuilder.createQuery(Event.class);
