@@ -7,7 +7,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface UpdateEventAdminRequestToEventMapper {
 
-    @Mapping(source = "categoryId", target = "category.id")
+    @Mapping(source = "categoryId", target = "category.id") //TODO Уточнить у Матвея
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Event toEvent(UpdateEventAdminRequest updateEventAdminRequest,
                   @MappingTarget Event event);

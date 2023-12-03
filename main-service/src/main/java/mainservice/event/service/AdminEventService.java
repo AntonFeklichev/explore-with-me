@@ -37,7 +37,7 @@ public class AdminEventService {
     public EventFullDto patchEvent(Long eventId,
                                    UpdateEventAdminRequest updateEventAdminRequest) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new EventNotFoundException("Event not found"));
+                .orElseThrow(() -> new EventNotFoundException("Requested Event not found"));
 
         Event updated = updateEventAdminRequestToEventMapper.toEvent(updateEventAdminRequest,
                 event);
@@ -57,20 +57,21 @@ public class AdminEventService {
         switch (adminEventStateAction) {
             case PUBLISH_EVENT: {
                 if (!EventStateEnum.PENDING.equals(event.getState())) {
-                    throw new InvalidStateActionException("Event state is not PENDING");
+                    throw new InvalidStateActionException("You cannot publish event if its state is not PENDING.");
                 }
                 event.setState(EventStateEnum.PUBLISHED);
                 event.setPublishedOn(now());
                 return;
             }
             case REJECT_EVENT: {
-                if (!EventStateEnum.PENDING.equals(event.getState())) {
-                    throw new InvalidStateActionException("Even already PUBLISHED");
+                if (EventStateEnum.PUBLISHED.equals(event.getState())) {
+                    throw new InvalidStateActionException("You cannot reject event if it is already published.");
                 }
-                //event.setState(EventStateEnum.PUBLISHED); TODO Спросить у Матвея по Reject
+                event.setState(EventStateEnum.CANCELED);
+                return;
             }
             default: {
-                throw new InvalidStateActionException("Unknown state action"); //TODO как может быть unknow
+                throw new InvalidStateActionException("Unknown state action"); //TODO как может быть unknown
             }
         }
     }

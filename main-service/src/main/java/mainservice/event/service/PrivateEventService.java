@@ -27,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -65,7 +66,7 @@ public class PrivateEventService {
         event.setCategory(category);
         event.setLocation(location);
         event.setState(EventStateEnum.PENDING);
-        event.setCreatedOn(String.valueOf(now()));
+        event.setCreatedOn(LocalDateTime.from(now()));
 
         Event savedEvent = eventRepository.save(event);
 
