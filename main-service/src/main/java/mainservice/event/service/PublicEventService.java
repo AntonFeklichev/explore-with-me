@@ -3,7 +3,7 @@ package mainservice.event.service;
 import lombok.RequiredArgsConstructor;
 import mainservice.event.dto.EventShortDto;
 import mainservice.event.dto.filter.PublicEventFilterQuery;
-import mainservice.event.mapper.EventToEventShortDto;
+import mainservice.event.mapper.EventToEventShortDtoMapper;
 import mainservice.event.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 public class PublicEventService {
 
     private final EventRepository eventRepository;
-    private final EventToEventShortDto eventToEventShortDto;
+    private final EventToEventShortDtoMapper eventToEventShortDtoMapper;
 
 
     public List<EventShortDto> getFilteredEventForPublic(PublicEventFilterQuery publicEventFilterQuery) {
 
         return eventRepository.getFilteredEventForPublic(publicEventFilterQuery).stream()
-                .map(eventToEventShortDto::toEventShortDto)
+                .map(eventToEventShortDtoMapper::toEventShortDto)
                 .collect(Collectors.toList());
 
     }

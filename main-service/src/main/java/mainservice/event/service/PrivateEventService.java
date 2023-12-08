@@ -8,7 +8,7 @@ import mainservice.event.entity.Event;
 import mainservice.event.entity.EventStateEnum;
 import mainservice.event.mapper.EventPatchByUpdateEventUserRequestMapper;
 import mainservice.event.mapper.EventToEventFullDtoMapper;
-import mainservice.event.mapper.EventToEventShortDto;
+import mainservice.event.mapper.EventToEventShortDtoMapper;
 import mainservice.event.mapper.NewEventDtoToEventMapper;
 import mainservice.event.repository.EventRepository;
 import mainservice.exception.*;
@@ -45,7 +45,7 @@ public class PrivateEventService {
     private final UserRepository userRepository;
     private final NewEventDtoToEventMapper newEventDtoToEventMapper;
     private final EventToEventFullDtoMapper eventToEventFullDtoMapper;
-    private final EventToEventShortDto eventToEventShortDto;
+    private final EventToEventShortDtoMapper eventToEventShortDtoMapper;
     private final EventPatchByUpdateEventUserRequestMapper eventPatchByUpdateEventUserRequestMapper;
     private final ParticipationRequestRepository participationRequestRepository;
 
@@ -85,7 +85,7 @@ public class PrivateEventService {
         Pageable pageRequest = PageRequest.of(from, size);
 
         return eventRepository.getEventsByUserId(userId, pageRequest)
-                .map(eventToEventShortDto::toEventShortDto)
+                .map(eventToEventShortDtoMapper::toEventShortDto)
                 .getContent();
 
     }
