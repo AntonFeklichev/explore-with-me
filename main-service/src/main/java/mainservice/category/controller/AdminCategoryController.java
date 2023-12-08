@@ -31,7 +31,8 @@ public class AdminCategoryController {
     }
 
     @DeleteMapping(path = "/{catId}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable(name = "catId") Long catId) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable(name = "catId")
+                                               Long catId) {
 
         adminCategoryService.deleteCategory(catId);
 
