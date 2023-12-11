@@ -27,4 +27,11 @@ public interface ParticipationRequestRepository extends JpaRepository<Participat
            "AND p.status = 'PENDING'")
     int updateStatusByEventIdAndPending(Long eventId, ParticipationRequestEnum newStatus);
 
+
+    @Query("SELECT p " +
+           "FROM ParticipationRequest p " +
+           "WHERE p.requester.id = :userID " +
+           "ORDER BY p.event.eventDate ASC")
+    List<ParticipationRequest> findAllByUserId(Long userId);
+
 }

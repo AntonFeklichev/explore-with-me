@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/admin/compilations")
 @Validated
 @RequiredArgsConstructor
-public class AdminCompilationsController {
+public class AdminCompilationController {
 
     private final AdminCompilationService adminCompilationService;
 

@@ -6,6 +6,7 @@ import mainservice.participationrequest.dto.ParticipationRequestEnum;
 import mainservice.user.entity.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "participation_request")
@@ -20,7 +21,7 @@ public class ParticipationRequest {
     @Column(name = "participation_request_id")
     Long id;
     @Column(name = "participation_request_created")
-    String created;
+    LocalDateTime created;
     @JoinColumn(name = "participation_request_event_id")
     @OneToOne
     Event event;
