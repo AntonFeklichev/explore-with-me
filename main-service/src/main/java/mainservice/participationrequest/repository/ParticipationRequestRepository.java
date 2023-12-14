@@ -30,7 +30,7 @@ public interface ParticipationRequestRepository extends JpaRepository<Participat
 
     @Query("SELECT p " +
            "FROM ParticipationRequest p " +
-           "WHERE p.requester.id = :userID " +
+           "WHERE p.requester.id = :userId " +
            "ORDER BY p.event.eventDate ASC")
     List<ParticipationRequest> findAllByUserId(Long userId);
 

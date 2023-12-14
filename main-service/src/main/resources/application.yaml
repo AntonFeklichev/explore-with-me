@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+stats:
+  server:
+    URL: ${STATS_SERVER_URL}
+
 spring:
 
   mvc:
@@ -11,9 +15,10 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 123
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:123}
     driver-class-name: org.postgresql.Driver
+
 
   jpa:
     database: POSTGRESQL
