@@ -1,2 +1,2 @@
 # java-explore-with-me
-Template repository for ExploreWithMe project.
+Приложение ExploreWithMe (англ. «исследуй со мной») позволяет пользователям делиться информацией об интересных событиях и находить компанию для участия в них. 
