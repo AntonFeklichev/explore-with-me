@@ -3,11 +3,12 @@
 Приложение по сути афиша, которая позволяет пользователям делиться информацией об интересных событиях и находить компанию для участия в них.
 
 В проекте использовал: 
-- Spring Boot 
+- Spring Boot
+- RESTful API 
 - Maven 
 - JPA and Hibernate
 - Criteria API
-- PostgreSQL RESTful CRUD API
+- PostgreSQL CRUD API
 - Docker
 - Lombok
 - MapStruct
