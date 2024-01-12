@@ -64,6 +64,8 @@ public class PublicEventController {
                 .categories(categories)
                 .rangeStart(rangeStart)
                 .rangeEnd(rangeEnd)
+                .from(from)
+                .size(size)
                 .build();
 
         return publicEventService.getFilteredEventForPublic(query);

@@ -4,6 +4,7 @@ import base.BaseClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class StatsClient extends BaseClient {
                        RestTemplateBuilder restTemplate) {
         super(restTemplate
                 .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl + apiPref))
+                .requestFactory(HttpComponentsClientHttpRequestFactory.class)
                 .build());
     }
 

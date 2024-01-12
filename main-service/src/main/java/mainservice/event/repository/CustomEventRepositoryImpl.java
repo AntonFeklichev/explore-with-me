@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.time.LocalTime.now;
+import static java.time.LocalDateTime.now;
 
 public class CustomEventRepositoryImpl extends SimpleJpaRepository<Event, Long> implements CustomEventRepository {
 
@@ -42,7 +42,7 @@ public class CustomEventRepositoryImpl extends SimpleJpaRepository<Event, Long> 
             predicates.add(rootEvent.get("initiator").in(usersIds));
         }
 
-        List<String> states = filterQuery.getStates();
+        List<EventStateEnum> states = filterQuery.getStates();
         if (states != null && !states.isEmpty()) {
             predicates.add(rootEvent.get("state").in(states));
         }
@@ -67,7 +67,7 @@ public class CustomEventRepositoryImpl extends SimpleJpaRepository<Event, Long> 
         criteriaQuery.where(predicates.toArray(Predicate[]::new));
 
         TypedQuery<Event> query = entityManager.createQuery(criteriaQuery)
-                .setFirstResult(filterQuery.getSize())
+                .setFirstResult(filterQuery.getFrom())
                 .setMaxResults(filterQuery.getSize());
 
         return query.getResultList();

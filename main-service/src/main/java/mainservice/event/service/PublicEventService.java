@@ -5,6 +5,7 @@ import mainservice.event.dto.EventShortDto;
 import mainservice.event.dto.filter.PublicEventFilterQuery;
 import mainservice.event.mapper.EventToEventShortDtoMapper;
 import mainservice.event.repository.EventRepository;
+import mainservice.exception.ValidationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class PublicEventService {
 
     public List<EventShortDto> getFilteredEventForPublic(PublicEventFilterQuery publicEventFilterQuery) {
 
+        if (publicEventFilterQuery.getRangeEnd() != null && publicEventFilterQuery.getRangeEnd().isBefore(publicEventFilterQuery.getRangeStart())) {
+            throw new ValidationException("Invalid end event date");
+        }
         return eventRepository.getFilteredEventForPublic(publicEventFilterQuery).stream()
                 .map(eventToEventShortDtoMapper::toEventShortDto)
                 .collect(Collectors.toList());

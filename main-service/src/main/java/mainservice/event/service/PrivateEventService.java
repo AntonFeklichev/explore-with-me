@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static java.time.LocalTime.now;
 
 @Service
 @RequiredArgsConstructor
@@ -66,7 +65,7 @@ public class PrivateEventService {
         event.setCategory(category);
         event.setLocation(location);
         event.setState(EventStateEnum.PENDING);
-        event.setCreatedOn(LocalDateTime.from(now()));
+        event.setCreatedOn(LocalDateTime.now());
 
         Event savedEvent = eventRepository.save(event);
 

@@ -65,7 +65,7 @@ public class PrivateEventController {
     @ResponseStatus(HttpStatus.OK)
     public EventFullDto patchEventByUserInitiatorIdAndEventId(@PathVariable(name = "userId")
                                                               Long userId,
-                                                              @PathVariable(name = "userId")
+                                                              @PathVariable(name = "eventId")
                                                               Long eventId,
                                                               @RequestBody
                                                               UpdateEventUserRequest updateEventUserRequest) {

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import mainservice.event.dto.EventFullDto;
 import mainservice.event.dto.UpdateEventAdminRequest;
 import mainservice.event.dto.filter.AdminEventFilterQuery;
+import mainservice.event.entity.EventStateEnum;
 import mainservice.event.service.AdminEventService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class AdminEventController {
     public List<EventFullDto> getEventsList(@RequestParam(name = "usersIds", defaultValue = "")
                                             List<Long> usersIds,
                                             @RequestParam(name = "states", defaultValue = "")
-                                            List<String> states,
+                                            List<EventStateEnum> states,
                                             @RequestParam(name = "categories", defaultValue = "")
                                             List<Long> categories,
                                             @RequestParam(name = "rangeStart", required = false)

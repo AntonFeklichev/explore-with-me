@@ -17,14 +17,14 @@ public class PrivateParticipationRequestController {
 
     private final PrivateParticipationRequestService privateParticipationRequestService;
 
-    @PatchMapping(path = "/{userId}/requests")
+    @PostMapping(path = "/{userId}/requests")
     @ResponseStatus(HttpStatus.CREATED)
-    public ParticipationRequestDto patchParticipationRequest(@PathVariable(name = "userId")
+    public ParticipationRequestDto postParticipationRequest(@PathVariable(name = "userId")
                                                              Long userId,
-                                                             @RequestParam(name = "eventId")
+                                                            @RequestParam(name = "eventId")
                                                              Long eventId) {
 
-        return privateParticipationRequestService.patchParticipationRequest(userId, eventId);
+        return privateParticipationRequestService.postParticipationRequest(userId, eventId);
 
     }
 

@@ -6,6 +6,7 @@ import mainservice.location.entity.Location;
 import mainservice.user.entity.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,16 +22,17 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "events_id")
     private Long id;
-    @Column(name = "events_annotation")
+    @Column(name = "events_annotation", length = 2000)
     private String annotation;
     @JoinColumn(name = "events_category")
     @ManyToOne
     private Category category;
     @Column(name = "events_confirmed_requests")
-    private Integer confirmedRequests;
+    @Builder.Default
+    private Integer confirmedRequests = 0;
     @Column(name = "events_created_on")
     private LocalDateTime createdOn;
-    @Column(name = "events_description")
+    @Column(name = "events_description", length = 7000)
     private String description;
     @Column(name = "events_event_date")
     private LocalDateTime eventDate;

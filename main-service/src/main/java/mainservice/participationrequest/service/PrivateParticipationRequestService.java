@@ -30,7 +30,7 @@ public class PrivateParticipationRequestService {
     private final ParticipationRequestToDtoMapper participationRequestToDtoMapper;
 
 
-    public ParticipationRequestDto patchParticipationRequest(Long userId, Long eventId) {
+    public ParticipationRequestDto postParticipationRequest(Long userId, Long eventId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));

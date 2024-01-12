@@ -2,6 +2,7 @@ package mainservice.event.dto.filter;
 
 import lombok.Builder;
 import lombok.Value;
+import mainservice.event.entity.EventStateEnum;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public class AdminEventFilterQuery {
 
     List<Long> usersIds;
-    List<String> states;
+    List<EventStateEnum> states;
     List<Long> categories;
     LocalDateTime rangeStart;
     LocalDateTime rangeEnd;
