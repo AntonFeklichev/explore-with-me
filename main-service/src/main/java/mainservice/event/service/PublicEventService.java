@@ -42,10 +42,7 @@ public class PublicEventService {
 
     }
 
-    public EventFullDto getEventById(Long eventId, EndPointHitDto endPointHitDto) {
-
-        StatsIpDto statsIpDto = (StatsIpDto) statsClient
-                .getStatsIp(endPointHitDto.getIp(), endPointHitDto.getUri()).getBody();
+    public EventFullDto getEventById(Long eventId) {
 
 
         Event event = eventRepository.findById(eventId)
@@ -53,10 +50,9 @@ public class PublicEventService {
         if (!event.getState().equals(EventStateEnum.PUBLISHED)) {
             throw new EventNotFoundException("Event is not Published");
         }
-        if(!statsIpDto.getIsIpHit()) {
-        event.setViews(event.getViews() + 1);}
 
-        endPointHitClient.saveEndPointHit(endPointHitDto);
+        event.setViews(event.getViews() + 1);
+
 
         eventRepository.save(event);
 

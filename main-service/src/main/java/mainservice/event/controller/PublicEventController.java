@@ -81,8 +81,9 @@ public class PublicEventController {
                 .timestamp(LocalDateTime.now())
                 .build();
 
+        endPointHitClient.saveEndPointHit(endPointHitDto);
 
-       return publicEventService.getEventById(eventId, endPointHitDto);
+        return publicEventService.getEventById(eventId);
 
     }
 
