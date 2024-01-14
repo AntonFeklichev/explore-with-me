@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import stats.dto.StatsDto;
+import stats.dto.StatsIpDto;
 import stats.dto.StatsRequestDto;
 
 import java.time.LocalDateTime;
@@ -56,5 +57,16 @@ public class StatsController {
                 .build();
         return statsService.getStats(statsRequestDto);
     }
+
+    @GetMapping("/stats/ip")
+    public StatsIpDto getStatsIpDto(@RequestParam(name = "ip")
+                                    String ip,
+                                    @RequestParam(name = "uri")
+                                    String uri) {
+
+        return statsService.getStatsIpDto(ip, uri);
+
+    }
+
 
 }

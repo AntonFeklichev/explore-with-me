@@ -1,12 +1,21 @@
 package mainservice.event.service;
 
+import endpointhit.EndPointHitDto;
+import endpointhitclient.EndPointHitClient;
 import lombok.RequiredArgsConstructor;
+import mainservice.event.dto.EventFullDto;
 import mainservice.event.dto.EventShortDto;
 import mainservice.event.dto.filter.PublicEventFilterQuery;
+import mainservice.event.entity.Event;
+import mainservice.event.entity.EventStateEnum;
+import mainservice.event.mapper.EventToEventFullDtoMapper;
 import mainservice.event.mapper.EventToEventShortDtoMapper;
 import mainservice.event.repository.EventRepository;
+import mainservice.exception.EventNotFoundException;
 import mainservice.exception.ValidationException;
 import org.springframework.stereotype.Service;
+import stats.dto.StatsIpDto;
+import statsclient.StatsClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +25,10 @@ import java.util.stream.Collectors;
 public class PublicEventService {
 
     private final EventRepository eventRepository;
+    private final StatsClient statsClient;
+    private final EndPointHitClient endPointHitClient;
     private final EventToEventShortDtoMapper eventToEventShortDtoMapper;
+    private final EventToEventFullDtoMapper eventToEventFullDtoMapper;
 
 
     public List<EventShortDto> getFilteredEventForPublic(PublicEventFilterQuery publicEventFilterQuery) {
@@ -29,5 +41,28 @@ public class PublicEventService {
                 .collect(Collectors.toList());
 
     }
+
+    public EventFullDto getEventById(Long eventId, EndPointHitDto endPointHitDto) {
+
+        StatsIpDto statsIpDto = (StatsIpDto) statsClient
+                .getStatsIp(endPointHitDto.getIp(), endPointHitDto.getUri()).getBody();
+
+
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventNotFoundException("Event not found"));
+        if (!event.getState().equals(EventStateEnum.PUBLISHED)) {
+            throw new EventNotFoundException("Event is not Published");
+        }
+        if(!statsIpDto.getIsIpHit()) {
+        event.setViews(event.getViews() + 1);}
+
+        endPointHitClient.saveEndPointHit(endPointHitDto);
+
+        eventRepository.save(event);
+
+        return eventToEventFullDtoMapper.toEventFullDto(event);
+
+    }
+
 
 }

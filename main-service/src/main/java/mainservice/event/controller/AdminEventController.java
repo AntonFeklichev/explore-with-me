@@ -10,6 +10,7 @@ import mainservice.event.service.AdminEventService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class AdminEventController {
     @PatchMapping(path = "/events/{eventId}")
     public EventFullDto patchEvent(@PathVariable(name = "eventId")
                                    Long eventId,
+                                   @Valid
                                    @RequestBody
                                    UpdateEventAdminRequest updateEventAdminRequest) {
 

@@ -3,15 +3,13 @@ package mainservice.event.controller;
 import endpointhit.EndPointHitDto;
 import endpointhitclient.EndPointHitClient;
 import lombok.RequiredArgsConstructor;
+import mainservice.event.dto.EventFullDto;
 import mainservice.event.dto.EventShortDto;
 import mainservice.event.dto.EventSort;
 import mainservice.event.dto.filter.PublicEventFilterQuery;
 import mainservice.event.service.PublicEventService;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -70,4 +68,23 @@ public class PublicEventController {
 
         return publicEventService.getFilteredEventForPublic(query);
     }
+
+    @GetMapping(path = "/{eventId}")
+    EventFullDto getEventById(@PathVariable(name = "eventId")
+                              Long eventId,
+                              HttpServletRequest request) {
+
+        EndPointHitDto endPointHitDto = EndPointHitDto.builder()
+                .app("explore-with-me-main-service")
+                .ip(request.getRemoteAddr())
+                .uri(request.getRequestURI())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+
+       return publicEventService.getEventById(eventId, endPointHitDto);
+
+    }
+
+
 }

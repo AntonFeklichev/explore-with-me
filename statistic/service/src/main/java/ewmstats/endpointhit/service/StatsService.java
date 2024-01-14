@@ -8,6 +8,7 @@ import ewmstats.endpointhit.repository.projections.StatsProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import stats.dto.StatsDto;
+import stats.dto.StatsIpDto;
 import stats.dto.StatsRequestDto;
 
 import java.util.List;
@@ -42,7 +43,6 @@ public class StatsService {
     }
 
 
-
     public List<StatsDto> getStatsByStartEndUriUnique(StatsRequestDto statsRequestDto) {
         if (statsRequestDto.getUnique()) {
             return findAllByStartEndUriUnique(statsRequestDto);
@@ -51,7 +51,7 @@ public class StatsService {
     }
 
 
-   private List<StatsDto> findAllByStartEnd(StatsRequestDto statsRequestDto) {
+    private List<StatsDto> findAllByStartEnd(StatsRequestDto statsRequestDto) {
         return mapToStatsDto(
                 statsRepository.findAllByStartEnd(statsRequestDto.getStart(),
                         statsRequestDto.getEnd()
@@ -59,7 +59,7 @@ public class StatsService {
         );
     }
 
-   private List<StatsDto> findAllByStartEndUnique(StatsRequestDto statsRequestDto) {
+    private List<StatsDto> findAllByStartEndUnique(StatsRequestDto statsRequestDto) {
         return mapToStatsDto(
                 statsRepository.findAllByStartEndUnique(statsRequestDto.getStart(),
                         statsRequestDto.getEnd()
@@ -67,7 +67,7 @@ public class StatsService {
         );
     }
 
-   private List<StatsDto> findAllByStartEndUri(StatsRequestDto statsRequestDto) {
+    private List<StatsDto> findAllByStartEndUri(StatsRequestDto statsRequestDto) {
         return mapToStatsDto(
                 statsRepository.findAllByStartEndUri(statsRequestDto.getStart(),
                         statsRequestDto.getEnd(),
@@ -76,7 +76,7 @@ public class StatsService {
         );
     }
 
-   private List<StatsDto> findAllByStartEndUriUnique(StatsRequestDto statsRequestDto) {
+    private List<StatsDto> findAllByStartEndUriUnique(StatsRequestDto statsRequestDto) {
         return mapToStatsDto(
                 statsRepository.findAllByStartEndUriUnique(statsRequestDto.getStart(),
                         statsRequestDto.getEnd(),
@@ -95,5 +95,20 @@ public class StatsService {
                         .hits(statsProj.getHits())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    public StatsIpDto getStatsIpDto(String ip, String uri) {
+
+        Long hitCountByIpAndUri = statsRepository.getHitCountByIpAndUri(ip, uri);
+
+        if (hitCountByIpAndUri > 0) {
+            return StatsIpDto.builder()
+                    .isIpHit(true)
+                    .build();
+        } else {
+            return StatsIpDto.builder()
+                    .isIpHit(false)
+                    .build();
+        }
     }
 }

@@ -67,6 +67,7 @@ public class PrivateEventController {
                                                               Long userId,
                                                               @PathVariable(name = "eventId")
                                                               Long eventId,
+                                                              @Valid
                                                               @RequestBody
                                                               UpdateEventUserRequest updateEventUserRequest) {
 

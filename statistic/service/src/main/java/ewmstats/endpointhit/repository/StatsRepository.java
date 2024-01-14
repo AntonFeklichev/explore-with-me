@@ -70,4 +70,11 @@ public interface StatsRepository extends JpaRepository<EndPointHit, Long> {
            "hits DESC\n")
     List<StatsProjection> findAllByStartEndUriUnique(LocalDateTime start, LocalDateTime end,
                                                      List<String> uris);
+
+
+    @Query("SELECT COUNT(h.ip) " +
+           "FROM EndPointHit h " +
+           "WHERE h.ip = ?1 " +
+           "AND h.uri = ?2")
+    Long getHitCountByIpAndUri(String ip, String uri);
 }

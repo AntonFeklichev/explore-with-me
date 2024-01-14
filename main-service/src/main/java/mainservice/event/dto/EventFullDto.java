@@ -8,6 +8,9 @@ import mainservice.event.entity.EventStateEnum;
 import mainservice.location.entity.Location;
 import mainservice.user.dto.UserShortDto;
 
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+
 
 @Value
 @Builder
@@ -19,7 +22,7 @@ public class EventFullDto {
     Integer confirmedRequests;
     String createdOn;
     String description;
-    String eventDate;
+    LocalDateTime eventDate;
     UserShortDto initiator;
     Location location;
     Boolean paid;

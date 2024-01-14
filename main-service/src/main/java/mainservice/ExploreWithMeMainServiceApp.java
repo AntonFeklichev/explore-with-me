@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import statsclient.StatsClient;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +31,12 @@ public class ExploreWithMeMainServiceApp {
         return new EndPointHitClient(serverUrl, restTemplate);
     }
 
+    @Bean
+    StatsClient doBeanByStatsClint(@Value("${stats.server.URL}")
+                                                String serverUrl,
+                                          RestTemplateBuilder restTemplate) {
+        return new StatsClient(serverUrl, restTemplate);
+    }
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {

@@ -40,7 +40,7 @@ public class Event {
     @ManyToOne
     private User initiator;
     @JoinColumn(name = "events_location")
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private Location location;
     @Column(name = "events_paid")
     private Boolean paid;
@@ -53,10 +53,11 @@ public class Event {
     @Column(name = "events_state")
     @Enumerated(value = EnumType.STRING)
     private EventStateEnum state;
-    @Column(name = "events_title")
+    @Column(name = "events_title", length = 120)
     private String title;
     @Column(name = "events_views")
-    private Long views;
+    @Builder.Default
+    private Long views = 0L;
 
 
 }

@@ -121,7 +121,9 @@ public class PrivateEventService {
 
         eventPatchByUpdateEventUserRequestMapper.patchEvent(event, updateEventUserRequest);
 
-        applyStateAction(updateEventUserRequest.getStateAction(), event);
+        if (updateEventUserRequest.getStateAction() != null) {
+            applyStateAction(updateEventUserRequest.getStateAction(), event);
+        }
 
         Event savedEvent = eventRepository.save(event);
 

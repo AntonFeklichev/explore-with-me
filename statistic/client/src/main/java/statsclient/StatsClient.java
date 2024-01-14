@@ -39,5 +39,15 @@ public class StatsClient extends BaseClient {
 
         return get(uriTemplate, params);
     }
+
+    public ResponseEntity<Object> getStatsIp(String ip, String uri) {
+
+        Map<String, Object> params = Map.of("ip", ip,
+                "uri", uri);
+
+        String uriTemplates = "/ip?ip={ip}&uri={uri}";
+
+        return get(uriTemplates, params);
+    }
 }
 
