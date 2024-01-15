@@ -20,6 +20,9 @@ public class AdminCompilationService {
     public CompilationDto postCompilation(NewCompilationDto newCompilationDto) {
 
         Compilation compilation = compilationMapper.toCompilation(newCompilationDto);
+        if(compilation.getPinned() == null) {
+            compilation.setPinned(false);
+        }
 
         compilationRepository.save(compilation);
 
