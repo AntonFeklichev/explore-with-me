@@ -20,7 +20,7 @@ public class PublicCompilationController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CompilationDto> getCompilationList(@RequestParam(name = "pinned")
+    public List<CompilationDto> getCompilationList(@RequestParam(name = "pinned", defaultValue = "false")
                                                    Boolean pinned,
                                                    @RequestParam(name = "from", defaultValue = "0")
                                                    Integer from,

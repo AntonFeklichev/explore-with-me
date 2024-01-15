@@ -119,12 +119,12 @@ public class CustomEventRepositoryImpl extends SimpleJpaRepository<Event, Long> 
 
         if (rangeStart != null) {
             predicates.add(criteriaBuilder
-                    .greaterThanOrEqualTo(eventRoot.get("eventDate"), now()));
+                    .greaterThanOrEqualTo(eventRoot.get("eventDate"), rangeStart));
         }
 
         if (rangeEnd != null) {
             predicates.add(criteriaBuilder
-                    .lessThanOrEqualTo(eventRoot.get("eventDate"), now()));
+                    .lessThanOrEqualTo(eventRoot.get("eventDate"), rangeEnd));
         }
 
         Predicate onlyPublished = criteriaBuilder

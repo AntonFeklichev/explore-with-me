@@ -1,9 +1,9 @@
 package mainservice.event.repository;
 
+import mainservice.category.entity.Category;
 import mainservice.event.entity.Event;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -21,9 +21,13 @@ public interface EventRepository extends CustomEventRepository {
            "AND e.id = :eventId")
     Event getEventByUserIdAndEventId(Long userId, Long eventId); */
 
-@Query("SELECT e.initiator.id " +
-       "FROM Event as e " +
-       "WHERE e.id = :eventId")
-   Long findInitiatorIdByEventId(Long eventId);
+    @Query("SELECT e.initiator.id " +
+           "FROM Event as e " +
+           "WHERE e.id = :eventId")
+    Long findInitiatorIdByEventId(Long eventId);
 
+    @Query("SELECT COUNT(e) " +
+           "FROM Event e " +
+           "WHERE e.category.id = :catId")
+    Long countEventByCategory(Long catId);
 }

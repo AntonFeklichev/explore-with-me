@@ -7,7 +7,9 @@ import mainservice.category.entity.Category;
 import mainservice.category.mapper.CategoryMapper;
 import mainservice.category.mapper.NewCategoryDtoToCategoryMapper;
 import mainservice.category.repository.CategoryRepository;
+import mainservice.event.repository.EventRepository;
 import mainservice.exception.CategoryNotFoundException;
+import mainservice.exception.EventPublishedExceptions;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +19,7 @@ public class AdminCategoryService {
     private final CategoryRepository categoryRepository;
     private final NewCategoryDtoToCategoryMapper newCategoryDtoToCategoryMapper;
     private final CategoryMapper categoryMapper;
+    private final EventRepository eventRepository;
 
     public CategoryDto postCategory(NewCategoryDto newCategoryDto) {
 
@@ -30,6 +33,10 @@ public class AdminCategoryService {
 
     public void deleteCategory(Long catId) {
 
+        Long count = eventRepository.countEventByCategory(catId);
+        if (count != 0) {
+            throw new EventPublishedExceptions("Category have attached event");
+        }
         categoryRepository.deleteById(catId);
     }
 

@@ -76,7 +76,7 @@ public class PrivateParticipationRequestService {
     }
 
     private void checkEventParticipantLimit(Event event) {
-        if (Objects.equals(event.getParticipantLimit(), 0)
+        if (!Objects.equals(event.getParticipantLimit(), 0)
             && Objects.equals(event.getConfirmedRequests(), event.getParticipantLimit())) {
             throw new ParticipantLimitReachedException("Participant limit reached");
         }

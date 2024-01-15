@@ -39,7 +39,6 @@ public class PublicEventService {
         return eventRepository.getFilteredEventForPublic(publicEventFilterQuery).stream()
                 .map(eventToEventShortDtoMapper::toEventShortDto)
                 .collect(Collectors.toList());
-
     }
 
     public EventFullDto getEventById(Long eventId) {

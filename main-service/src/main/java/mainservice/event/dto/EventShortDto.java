@@ -6,6 +6,8 @@ import mainservice.category.dto.CategoryDto;
 import mainservice.category.entity.Category;
 import mainservice.user.dto.UserShortDto;
 
+import java.time.LocalDateTime;
+
 @Value
 @Builder
 public class EventShortDto {
@@ -14,7 +16,7 @@ public class EventShortDto {
     String annotation;
     CategoryDto category;
     Integer confirmedRequests;
-    String eventDate;
+    LocalDateTime eventDate;
     UserShortDto initiator;
     Boolean paid;
     String title;

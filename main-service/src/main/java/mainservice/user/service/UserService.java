@@ -1,6 +1,7 @@
 package mainservice.user.service;
 
 import lombok.RequiredArgsConstructor;
+import mainservice.exception.UserAlreadyExistsException;
 import mainservice.user.dto.NewUserRequestDto;
 import mainservice.user.dto.UserDto;
 import mainservice.user.entity.User;
@@ -26,7 +27,11 @@ public class UserService {
 
         User user = newUserRequestDtoMapper.toUser(newUserRequestDto);
 
+        if (userRepository.existsByName(user.getName())) {
+            throw new UserAlreadyExistsException("User already exists");
+        }
         userRepository.save(user);
+
         return userDtoMapper.toUserDto(user);
     }
 
