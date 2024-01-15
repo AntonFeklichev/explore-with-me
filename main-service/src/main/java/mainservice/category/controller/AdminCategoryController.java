@@ -44,6 +44,7 @@ public class AdminCategoryController {
     @PatchMapping(path = "/{catId}")
     public CategoryDto patchCategory(@PathVariable(name = "catIt")
                                      Long catId,
+                                     @Valid
                                      @RequestBody
                                      CategoryDto categoryDto) {
 
