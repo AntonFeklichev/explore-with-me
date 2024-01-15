@@ -42,7 +42,7 @@ public class AdminCategoryController {
     }
 
     @PatchMapping(path = "/{catId}")
-    public CategoryDto patchCategory(@PathVariable(name = "catIt")
+    public CategoryDto patchCategory(@PathVariable(name = "catId")
                                      Long catId,
                                      @Valid
                                      @RequestBody
