@@ -41,7 +41,7 @@ public class AdminCompilationController {
                 .build();
     }
 
-    @PatchMapping(name = "/{compId}")
+    @PatchMapping(path = "/{compId}")
     public CompilationDto patchCompilation(@PathVariable(name = "compId")
                                            Long compId,
                                            @Valid
