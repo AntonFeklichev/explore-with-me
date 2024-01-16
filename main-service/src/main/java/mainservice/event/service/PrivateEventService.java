@@ -151,6 +151,7 @@ public class PrivateEventService {
 
         checkUserIdAndInitiatorId(userId, initiatorId);
 
+
         return participationRequestRepository.findAllByEventId(eventId)
                 .stream()
                 .map(participationRequestToDtoMapper::toDto)
