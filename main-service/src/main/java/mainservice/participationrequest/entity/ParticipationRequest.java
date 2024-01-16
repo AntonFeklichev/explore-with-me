@@ -29,6 +29,7 @@ public class ParticipationRequest {
     @ManyToOne
     User requester;
     @Column(name = "participation_request_status")
+    @Enumerated(EnumType.STRING)
     ParticipationRequestEnum status;
 
 }
