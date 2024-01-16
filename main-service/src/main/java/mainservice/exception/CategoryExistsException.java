@@ -3,9 +3,9 @@ package mainservice.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class CategoryNotFoundException extends RuntimeException{
-    public CategoryNotFoundException(String message) {
+@ResponseStatus(code = HttpStatus.CONFLICT)
+public class CategoryExistsException extends RuntimeException{
+    public CategoryExistsException(String message) {
         super(message);
     }
 }

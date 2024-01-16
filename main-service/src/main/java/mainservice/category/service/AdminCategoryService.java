@@ -8,6 +8,7 @@ import mainservice.category.mapper.CategoryMapper;
 import mainservice.category.mapper.NewCategoryDtoToCategoryMapper;
 import mainservice.category.repository.CategoryRepository;
 import mainservice.event.repository.EventRepository;
+import mainservice.exception.CategoryExistsException;
 import mainservice.exception.CategoryNotFoundException;
 import mainservice.exception.EventPublishedExceptions;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class AdminCategoryService {
     public CategoryDto postCategory(NewCategoryDto newCategoryDto) {
 
         Category category = newCategoryDtoToCategoryMapper.toCategory(newCategoryDto);
+
+        Long count = categoryRepository.countCategoryByName(newCategoryDto.getName());
+        if(count != 0) {
+            throw new CategoryExistsException("Name of category is already taken"); //TODO уменьшить количество обращений к базе
+        }
 
         categoryRepository.save(category);
 
@@ -45,6 +51,11 @@ public class AdminCategoryService {
 
         Category category = categoryRepository.findById(catId)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+
+        Long count = categoryRepository.countCategoryByName(categoryDto.getName());
+        if(count != 0) {
+            throw new CategoryExistsException("Name of category is already taken"); //TODO уменьшить количество обращений к базе
+        }
 
         categoryMapper.toCategory(categoryDto, category);
 

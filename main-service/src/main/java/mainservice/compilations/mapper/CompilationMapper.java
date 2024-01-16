@@ -25,6 +25,6 @@ public interface CompilationMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "events", target = "events")
-    Compilation toCompilationFromUpdateRequest(UpdateCompilationRequest updateCompilationRequest);
+    Compilation toCompilationFromUpdateRequest(@MappingTarget Compilation compilation, UpdateCompilationRequest updateCompilationRequest);
 
 }

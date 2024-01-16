@@ -71,7 +71,7 @@ public class AdminEventService {
                 return;
             }
             default: {
-                throw new InvalidStateActionException("Unknown state action"); //TODO как может быть unknown
+                throw new InvalidStateActionException("Unknown state action");
             }
         }
     }

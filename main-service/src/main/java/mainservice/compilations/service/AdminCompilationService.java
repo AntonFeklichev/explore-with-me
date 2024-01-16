@@ -41,7 +41,9 @@ public class AdminCompilationService {
         Compilation compilation = compilationRepository.findById(compId)
                 .orElseThrow(() -> new CompilationNotFoundException("Compilation not found"));
 
-        compilationMapper.toCompilationFromUpdateRequest(updateCompilationRequest);
+        compilationMapper.toCompilationFromUpdateRequest(compilation, updateCompilationRequest);
+
+        compilationRepository.save(compilation);
 
         return compilationMapper.toCompilationDto(compilation);
     }

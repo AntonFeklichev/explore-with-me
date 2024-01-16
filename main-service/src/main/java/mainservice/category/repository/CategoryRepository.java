@@ -8,4 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
+    @Query("SELECT COUNT(c) " +
+           "FROM Category c " +
+           "WHERE c.name = :name")
+    Long countCategoryByName(String name);
+
 }
