@@ -1,7 +1,9 @@
 package mainservice.participationrequest.repository;
 
+import mainservice.event.entity.Event;
 import mainservice.participationrequest.dto.ParticipationRequestEnum;
 import mainservice.participationrequest.entity.ParticipationRequest;
+import mainservice.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,5 +35,8 @@ public interface ParticipationRequestRepository extends JpaRepository<Participat
            "WHERE p.requester.id = :userId " +
            "ORDER BY p.event.eventDate ASC")
     List<ParticipationRequest> findAllByUserId(Long userId);
+
+
+    Boolean existsByEventAndRequester(Event event, User user);
 
 }

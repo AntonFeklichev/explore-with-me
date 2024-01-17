@@ -40,14 +40,15 @@ public class PrivateParticipationRequestService {
         checkEventInitiatorNotRequester(userId, event);
         checkEventIsPublished(event);
         checkEventParticipantLimit(event);
+        checkDoubleRequest(event, user);
 
         ParticipationRequestEnum status = null;
-        if (event.getRequestModeration()) {
-            status = ParticipationRequestEnum.PENDING;
-        }
-        if (!event.getRequestModeration()) {
+
+        if (!event.getRequestModeration() || event.getParticipantLimit() == 0) {
             status = ParticipationRequestEnum.CONFIRMED;
             event.setConfirmedRequests(event.getConfirmedRequests() + 1);
+        } else {
+            status = ParticipationRequestEnum.PENDING;
         }
         ParticipationRequest participationRequest = ParticipationRequest
                 .builder()
@@ -79,6 +80,12 @@ public class PrivateParticipationRequestService {
         if (!Objects.equals(event.getParticipantLimit(), 0)
             && Objects.equals(event.getConfirmedRequests(), event.getParticipantLimit())) {
             throw new ParticipantLimitReachedException("Participant limit reached");
+        }
+    }
+
+    private void checkDoubleRequest(Event event, User user) {
+        if (participationRequestRepository.existsByEventAndRequester(event, user)) {
+            throw new DoubleParticipationRequestException("Participation request already exist");
         }
     }
 

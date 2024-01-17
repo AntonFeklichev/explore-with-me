@@ -27,7 +27,7 @@ public class AdminCategoryService {
         Category category = newCategoryDtoToCategoryMapper.toCategory(newCategoryDto);
 
         Long count = categoryRepository.countCategoryByName(newCategoryDto.getName());
-        if(count != 0) {
+        if (count != 0) {
             throw new CategoryExistsException("Name of category is already taken"); //TODO уменьшить количество обращений к базе
         }
 
@@ -52,14 +52,12 @@ public class AdminCategoryService {
         Category category = categoryRepository.findById(catId)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
 
-        Long count = categoryRepository.countCategoryByName(categoryDto.getName());
-        if(count != 0) {
-            throw new CategoryExistsException("Name of category is already taken"); //TODO уменьшить количество обращений к базе
-        }
 
-        categoryMapper.toCategory(categoryDto, category);
+        Category updated = categoryMapper.toCategory(categoryDto, category);
 
-        return categoryMapper.toCategoryDto(category);
+        categoryRepository.save(updated);
+
+        return categoryMapper.toCategoryDto(updated);
 
     }
 
