@@ -25,7 +25,7 @@ public class AdminEventController {
 
 
     @GetMapping(path = "/events")
-    public List<EventFullDto> getEventsList(@RequestParam(name = "usersIds", defaultValue = "")
+    public List<EventFullDto> getEventsList(@RequestParam(name = "users", defaultValue = "")
                                             List<Long> usersIds,
                                             @RequestParam(name = "states", defaultValue = "")
                                             List<EventStateEnum> states,

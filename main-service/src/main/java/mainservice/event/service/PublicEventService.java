@@ -1,5 +1,6 @@
 package mainservice.event.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import endpointhit.EndPointHitDto;
 import endpointhitclient.EndPointHitClient;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,14 @@ import mainservice.event.mapper.EventToEventShortDtoMapper;
 import mainservice.event.repository.EventRepository;
 import mainservice.exception.EventNotFoundException;
 import mainservice.exception.ValidationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import stats.dto.StatsIpDto;
 import statsclient.StatsClient;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +46,7 @@ public class PublicEventService {
                 .collect(Collectors.toList());
     }
 
-    public EventFullDto getEventById(Long eventId) {
+    public EventFullDto getEventById(Long eventId, HttpServletRequest request) {
 
 
         Event event = eventRepository.findById(eventId)
@@ -49,8 +54,26 @@ public class PublicEventService {
         if (!event.getState().equals(EventStateEnum.PUBLISHED)) {
             throw new EventNotFoundException("Event is not Published");
         }
+        ResponseEntity<Object> statServerResponse = statsClient
+                .getStatsIp(request.getRemoteAddr(), request.getRequestURI());
 
-        event.setViews(event.getViews() + 1);
+        //Boolean isIpHit = (Boolean) ((LinkedHashMap) statServerResponse.getBody()).get("isIpHit");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        StatsIpDto statsIpDto = mapper.convertValue(statServerResponse.getBody(), StatsIpDto.class);
+
+        if(!statsIpDto.getIsIpHit()) {
+        event.setViews(event.getViews() + 1);}
+
+        EndPointHitDto endPointHitDto = EndPointHitDto.builder()
+                .app("explore-with-me-main-service")
+                .ip(request.getRemoteAddr())
+                .uri(request.getRequestURI())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        endPointHitClient.saveEndPointHit(endPointHitDto);
 
 
         eventRepository.save(event);

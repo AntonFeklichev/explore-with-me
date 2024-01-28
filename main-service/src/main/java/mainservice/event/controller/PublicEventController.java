@@ -74,16 +74,8 @@ public class PublicEventController {
                               Long eventId,
                               HttpServletRequest request) {
 
-        EndPointHitDto endPointHitDto = EndPointHitDto.builder()
-                .app("explore-with-me-main-service")
-                .ip(request.getRemoteAddr())
-                .uri(request.getRequestURI())
-                .timestamp(LocalDateTime.now())
-                .build();
 
-        endPointHitClient.saveEndPointHit(endPointHitDto);
-
-        return publicEventService.getEventById(eventId);
+        return publicEventService.getEventById(eventId, request);
 
     }
 
