@@ -1,10 +1,13 @@
 package stats.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.*;
+
 
 @Value
 @Builder
+
 public class StatsIpDto {
+
     Boolean isIpHit;
+
 }
