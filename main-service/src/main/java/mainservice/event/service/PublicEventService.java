@@ -57,7 +57,6 @@ public class PublicEventService {
         ResponseEntity<Object> statServerResponse = statsClient
                 .getStatsIp(request.getRemoteAddr(), request.getRequestURI());
 
-        //Boolean isIpHit = (Boolean) ((LinkedHashMap) statServerResponse.getBody()).get("isIpHit");
 
         ObjectMapper mapper = new ObjectMapper();
 
